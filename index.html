@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Paragraph</title>
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}
+</script>
+<link rel="stylesheet" href="./css/app.css">
+<script src="./js/config.js"></script>
+<script src="./src-noconflict/ace.js" type="text/javascript"></script>
+<link rel="stylesheet" href="node_modules/xterm/css/xterm.css">
+<script src="node_modules/xterm/lib/xterm.js"></script>
+</head>
+<body>
+	<webview id="ft" style="height: 935px;" src="https://www.fontawesome.com/"></webview>
+	<webview id="gt" style="height: 935px;" src="https://www.github.com/"></webview>
+	<webview id="st" style="height: 935px;" src="https://www.stackoverflow.com/"></webview>
+	<webview id="yt" style="height: 935px;" src="https://www.youtube.com/"></webview>
+
+  	<div class="widgets">
+	 	<div id="fontawesome">
+			<i class="fontawesome fab fa-font-awesome-alt"></i>
+		</div>
+		<div id="github">
+			<i class="github fab fa-github"></i>
+		</div>
+		<div id="stack">
+			<i class="stack fab fa-stack-overflow"></i>
+		  </div>
+		  <div id="youtube">
+			<i class="youtube fab fa-youtube"></i>
+		  </div>
+	</div>
+
+    <div class="container">
+
+		<div class="titleBar titleBarStyle">
+
+			<div class="name"></div>
+
+			<div class="windowTitle draggable"> <img src="./img/logo.png" width="30" alt="" srcset=""> </div>
+
+			<div class="windowControls windowControlsStyle">
+				<button id="reduce"><i class="fas fa-minus"></i></button>
+				<button id="maximize"><i class="far fa-square"></i></button>
+				<button id="close"><i class="far fa-times"></i></button>
+			</div>
+
+		</div>
+
+		<div id="menu-bar">
+			<ul class="main-menu">
+				<li>
+					Fichier
+					<ul>
+					   	<li class="icon save" onclick='createNewFile()'><a href="#">Nouveau Fichier   <span> Ctrl+N</span></a></li>
+
+					   	<li class="icon save" onclick='createNewFile()'><a href="#">Nouveau Fenêtre   <span> Ctrl+Maj+N</span></a></li>
+
+						<li class="icon save" onclick="openFile()"><a href="#">Ouvrir un fichier <span> Ctrl+O</span></a></li>
+
+						<li class="icon save" onclick="selectFolder()"><a href="#">Ouvrir un dossier <span> Shift+O</span></a></li>	
+
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Ouvrir un fichier récent <span><i class="fal fa-chevron-right"></i></span></a></li>
+
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Enregistrer<span>Ctrl+S</span></a></li>
+
+						<li class="icon save"><a href="javascript:void(0)">Enregistrer sous <span>Ctrl+Maj+S</span></a></li>	
+
+						<li class="icon save"><a href="javascript:void(0)">Tout enregistrer <span>Ctrl+Alt+S</span></a></li>
+
+						<hr>
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Préférences</a></li>
+						<hr>
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Fermer la fenêtre <span> Ctrl+F4</span></a></li>
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Fermer l'onglet <span> Ctrl+W</span></a></li>
+						<hr>
+						<li class="icon save" onclick='quitApp()'><a href="javascript:void(0)">Quitter <span> Alt+F4</span></a></li>						
+					</ul>
+				</li>
+				<li>
+					Edition
+					<ul>
+						<li class="icon-save"><a href="#">Annuler <span> Ctrl+Z</span></a></li>
+						<li class="icon-save"><a href="#">Répéter <span> Ctrl+Y</span></a></li>
+						<hr>
+						<li class="icon-save"><a href="#">Copier <span> Ctrl+C</span></a></li>
+						<li class="icon-save"><a href="#">Coller <span> Ctrl+V</span></a></li>
+						<li class="icon-save"><a href="#">Couper <span> Ctrl+X</span></a></li>
+						<hr>
+						<li class="icon-save"><a href="#">Rechercher <span> Ctrl+F</span></a></li>
+						<li class="icon-save"><a href="#">Remplacer <span> Ctrl+H</span></a></li>
+					</ul>
+				</li>
+				<li>
+					Selection
+					<ul>
+						<li class="icon-save"><a href="#">Tout sélectionner <span> Ctrl+A</span></a></li>
+						<hr>
+						<li class="icon-save"><a href="#">Sélectionner cette ligne <span> Ctrl+L</span></a></li>
+						<li class="icon-save"><a href="#">Séléctionner le mot <span> Ctrl+D</span></a></li>
+						<li class="icon-save"><a href="#">Séléctionner la lettre <span> Ctrl+E</span></a></li>
+						<hr>
+						<li class="icon-save"><a href="#">Sélectionner la première ligne <span> Ctrl+Alt+↑</span></a></li>
+						<li class="icon-save"><a href="#">Sélectionner la dernière ligne <span> Ctrl+Alt+↓</span></a></li>
+					</ul>
+				</li>
+				<li>
+					Affichage
+					<ul>
+					   	<li class="icon save" onclick='createNewFile()'><a href="#">Nouveau Fichier   <span> Ctrl+N</span></a></li>
+					   	<li class="icon save" onclick='createNewFile()'><a href="#">Nouveau Fenêtre   <span> Ctrl+Maj+N</span></a></li>
+						<li class="icon save" onclick="openFile()"><a href="#">Ouvrir un fichier <span> Ctrl+O</span></a></li>
+						<li class="icon save"><a href="#">Ouvrir un dossier <span> Ctrl+Maj+O</span></a></li>	
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Ouvrir un fichier récent <span><i class="fal fa-chevron-right"></i></span></a></li>
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Enregistrer<span>Ctrl+S</span></a></li>
+						<li class="icon save" onclick="showSaveDialogAndSaveFile()"><a href="javascript:void(0)">Enregistrer sous <span>Ctrl+Maj+S</span></a></li>		
+						<li class="icon save" onclick="showSaveDialogAndSaveFile()"><a href="javascript:void(0)">Tout enregistrer <span>Ctrl+Alt+S</span></a></li>		
+						<hr>
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Préférences</a></li>
+						<hr>
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Fermer la fenêtre <span> Ctrl+F4</span></a></li>
+						<li class="icon save" onclick='saveFile()'><a href="javascript:void(0)">Fermer l'onglet <span> Ctrl+W</span></a></li>
+						<hr>
+						<li class="icon save" onclick='quitApp()'><a href="javascript:void(0)">Quitter <span> Alt+F4</span></a></li>						
+					</ul>
+				</li>
+				<li>
+					Exécuter
+					<ul>
+						<li class="icon-save"><a href="#">Annuler <span> Ctrl+Z</span></a></li>
+						<li class="icon-save"><a href="#">Répéter <span> Ctrl+Y</span></a></li>
+						<hr>
+						<li class="icon-save"><a href="#">Copier <span> Ctrl+C</span></a></li>
+						<li class="icon-save"><a href="#">Coller <span> Ctrl+V</span></a></li>
+						<li class="icon-save"><a href="#">Couper <span> Ctrl+X</span></a></li>
+						<hr>
+						<li class="icon-save"><a href="#">Rechercher <span> Ctrl+F</span></a></li>
+						<li class="icon-save"><a href="#">Remplacer <span> Ctrl+H</span></a></li>
+					</ul>
+				</li>
+				<li>
+					Aide
+					<ul>
+						<li class="icon-save"><a href="#">Aide <span> F1</span></a></li>
+						<hr>
+						<li class="icon-save"><a href="#">À propos <span> F3</span></a></li>
+					</ul>
+				</li>
+				<li>
+					Terminal
+					<ul>
+						<li class="icon-save" onclick="showOrHideTerminal()"><a href="#">Afficher / Cacher le terminal <span> Ctrl+Q</span></a></li>
+						<hr>
+						<li class="icon-save"><a href="#">À propos <span> F3</span></a></li>
+					</ul>
+				</li>
+			</ul>              
+		</div> 
+	</div>
+	<div class="tabs">
+		<div class="tabs-container">
+		</div>
+	</div>
+	<div class="codingScreen">
+		<div class="explorerContainer explorerContainerStyles">
+			<div class="filesContainer">
+			</div>
+			<div class="folderFiles">
+				<div class="folderTitle">
+				</div>
+				<div class="exploredFilesContainer">
+				</div>
+			</div>
+		</div>
+
+
+	<div class="editor-container">
+	</div>
+</div>
+
+	<div id="terminal">
+		<div id="terminal-header">
+			<a href="#"><i class="fas fa-plus"></i></a>	
+			<a href="#" onclick="showOrHideTerminal()"><i class="fas fa-times"></i></a>	
+		</div>
+	</div>
+    
+<script src="./js/titleBarStuff.js"></script>
+<script src="./js/base.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="./js/jquery.menu.js"></script>
+</body>
