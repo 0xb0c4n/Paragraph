@@ -3,7 +3,6 @@ const {app, BrowserWindow, ipcMain, BrowserView} = require('electron')
 const fs = require('fs');
 const path = require('path')
 var os = require('os');
-var pty = require('node-pty');
 
 ipcMain.on('file-path', (e, payload) => {
   if (!payload)
@@ -66,25 +65,28 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1920, 
-    height: 1080, 
-    icon: './img/logo.png', 
-    frame:false,
+    width: 1920,
+    height: 1080,
+    icon: './img/logo.png',
+    frame: false,
     background: "#323a44",
     webPreferences: {
-      nodeIntegration: true,
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true, // Assurez-vous que c'est activé
       enableRemoteModule: true,
       worldSafeExecuteJavaScript: true,
-      webviewTag: true
-  }
+      webviewTag: true,
+      nodeIntegration: false, // Désactivez nodeIntegration pour la sécurité
+    },
   });
 
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('index.html');
 
   mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+    mainWindow = null;
+  });
 }
+
 app.on('ready', () => {
   createWindow()
 })
